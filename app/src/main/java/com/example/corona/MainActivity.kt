@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.corona.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         user = FirebaseAuth.getInstance()
 
 
@@ -31,27 +35,26 @@ class MainActivity : AppCompatActivity() {
 
           val email=binding.etEmail.text.toString()
           val password=binding.etPassword.text.toString()
+           com.google.firebase.auth.FirebaseAuth.getInstance()
+               .createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+                   if (!it.isSuccessful) {
+                       Toast.makeText(
+                           applicationContext,
+                           "Please check Email and Password",
+                           Toast.LENGTH_SHORT
+                       ).show()
+                       return@addOnCompleteListener
+                   } else {
+                       Toast.makeText(
+                           applicationContext,
+                           "User Register Successful",
+                           Toast.LENGTH_SHORT
+                       ).show()
+                   }
+               }
 
-
-          if(email.isNotEmpty()&&password.isNotEmpty()) {
-              user.createUserWithEmailAndPassword(email,password)
-                  .addOnCompleteListener(MainActivity()){
-                      task ->
-
-                      if (task.isSuccessful){
-                          Toast.makeText(this, "user added successfully", Toast.LENGTH_SHORT).show()
-
-                          startActivity(Intent(this,SecondActivity::class.java))
-                            finish()
-                      }else{
-
-                          Toast.makeText(this, task.exception!!.message, Toast.LENGTH_SHORT).show()
-                      }
-                  }
-          } else{
-              Toast.makeText(this, "Email and password cannot be empty", Toast.LENGTH_SHORT).show()
-          }
        }
-
-
 }
+
+
+
