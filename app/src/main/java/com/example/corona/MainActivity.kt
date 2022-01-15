@@ -7,7 +7,7 @@ import android.widget.Toast
 import com.example.corona.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
-
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,8 +27,14 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnlogin.setOnClickListener {
             registeruser()
+            val  intent=Intent(this,SecondActivity::class.java)
+            startActivity(intent)
+            finish()
 
         }
+haveAn.setOnClickListener{
+    Toast.makeText(this, "Opening", Toast.LENGTH_SHORT).show()
+}
 
     }
        private fun registeruser(){
