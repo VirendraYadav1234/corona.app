@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnlogin.setOnClickListener {
             registeruser()
             val  intent=Intent(this,SecondActivity::class.java)
-            startActivity(intent)
+             startActivity(intent)
             finish()
 
         }
@@ -39,8 +39,8 @@ haveAn.setOnClickListener{
     }
        private fun registeruser(){
 
-          val email=binding.etEmail.text.toString()
-          val password=binding.etPassword.text.toString()
+          val email = binding.etEmail.text.toString()
+          val password = binding.etPassword.text.toString()
            com.google.firebase.auth.FirebaseAuth.getInstance()
                .createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                    if (!it.isSuccessful) {
@@ -57,6 +57,11 @@ haveAn.setOnClickListener{
                            Toast.LENGTH_SHORT
                        ).show()
                    }
+               }.addOnFailureListener{
+                   Toast.makeText(this, "not success", Toast.LENGTH_SHORT).show()
+
+
+
                }
 
        }
